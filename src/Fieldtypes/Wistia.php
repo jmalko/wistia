@@ -8,7 +8,7 @@ class Wistia extends \Statamic\Fields\Fieldtype
     {
         return [
             'wistiaApi' => config('wistia.api_key'),
-            'wistiaProjectId' => config('wisita.project_id'),
+            'wistiaProjectId' => config('wistia.project_id'),
         ];
     }
 
