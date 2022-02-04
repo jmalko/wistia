@@ -1,6 +1,6 @@
 # Wistia
 
-> Upload and embed Wistia videos straight from an entry field.  Either drang and drop to upload a new video, or copy-paste the url to the video you wish to embed. 
+> Upload and embed Wistia videos straight from an entry field.  Either drag and drop to upload a new video, or copy-paste the url to the video you wish to embed. 
 
 ## Features
 
