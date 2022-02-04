@@ -1,0 +1,19 @@
+{
+    "name": "jmalko/wistia",
+    "autoload": {
+        "psr-4": {
+            "Jmalko\\Wistia\\": "src"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Wistia",
+            "description": "Wistia addon"
+        },
+        "laravel": {
+            "providers": [
+                "Jmalko\\Wistia\\ServiceProvider"
+            ]
+        }
+    }
+}
