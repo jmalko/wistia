@@ -1,0 +1,66 @@
+<script src="https://fast.wistia.com/embed/medias/{{ wistia_id }}.jsonp" async></script>
+
+<script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+
+<!-- Wistia inline embed -->
+
+<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
+    <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+        <div class="wistia_embed wistia_async_{{ wistia_id }} videoFoam=true" style="height:100%;position:relative;width:100%">
+            <div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;">
+                <img src="https://fast.wistia.com/embed/medias/{{ wistia_id }}/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;" />
+            </div>
+        </div>
+    </div>
+</div> 
+
+<!-- Wistia popup embed -->
+<span class="wistia_embed wistia_async_{{ wistia_id }} popover=true popoverAnimateThumbnail=true" style="display:inline-block;height:84px;position:relative;width:150px">&nbsp;</span>
+
+
+<div id="wistia_meta_duration_{{ wistia_id }}"></div>
+<div id="wistia_meta_complete_{{ wistia_id }}"></div>
+<div id="wistia_meta_finished_{{ wistia_id }}"></div>
+
+<script>
+
+    // format time
+    function secondsToTime(e){
+        var h = Math.floor(e / 3600).toString(),
+            m = Math.floor(e % 3600 / 60).toString(),
+            s = Math.floor(e % 60).toString().padStart(2,'0');
+
+        var out = h > 0 ? h + 'h ' : '';
+            out += m + 'm ';
+
+        return out;
+    }
+
+    // hook to wistia embed
+
+    window._wq = window._wq || [];
+
+    // hook to specific videos for the possibility of various configs
+
+    _wq.push({ id: "{{ wistia_id }}", onReady: function(video) {
+
+        console.log(video);
+
+        // show duration
+        document.getElementById('wistia_meta_duration_{{ wistia_id }}').innerText = secondsToTime(video.duration());
+
+        // mark complete
+        video.bind('secondchange', function(t) {
+            if (video.percentWatched() > 0.1) {
+                document.getElementById('wistia_meta_complete_{{ wistia_id }}').innerText = "completed 10% of video";
+            }
+        });
+
+        // mark finished
+        video.bind('end', function(t) {
+            document.getElementById('wistia_meta_finished_{{ wistia_id }}').innerText = "finished video";
+        });
+
+    }});
+
+</script>
