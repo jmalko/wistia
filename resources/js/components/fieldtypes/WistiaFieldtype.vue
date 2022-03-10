@@ -1,7 +1,12 @@
 <template>
-    <div>
-        <div id="wistia_uploader" style="height:360px;"></div>
-        <text-input id="wistia_url" type="text" :value="value" @input="updateDebounced" />
+    <div class="wistia_fieldtype_container">
+        <div class="flex items-center">
+            <div class="input_group">
+                <div class="input_group_prepend">URL</div>
+                <text-input type="text" id="wistia_url" :value="value" @input="updateDebounced" class="input_text flex-1 bg-white">
+            </div>
+        </div>
+        <div id="wistia_uploader" style="height:360px; margin-top:20px;"></div>
     </div>
 </template>
  
