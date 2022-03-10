@@ -1,1 +1,55 @@
 .wistia_upload_graphic { margin-left: auto; margin-right: auto;}
+.wistia-fieldtype-container {
+  --bg-opacity: 1;
+  background-color: #f5f8fc;
+  background-color: rgba(244.79999999999998,248.11499999999998,252.45,var(--bg-opacity));
+  padding: 16px;
+  border-width: 1px;
+  border-radius: 3px;
+}
+.input-group {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  --text-opacity: 1;
+  color: #1c2e36;
+  color: rgba(27.743999999999996,46.02239999999999,53.85600000000001,var(--text-opacity));
+  width: 100%;
+  padding: 0;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  height: 38px;
+}
+.input-text:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left-width: 0;
+}
+.input-text {
+  flex: 1 1 0%;
+  --border-opacity: 1;
+  border-color: #c4ccd4;
+  border-color: rgba(196.35,204,211.65,var(--border-opacity));
+  min-width: 0;
+}
+.input-group-prepend {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-width: 1px;
+  font-size: 14px;
+  --text-opacity: 1;
+  color: #1c2e36;
+  color: rgba(27.743999999999996,46.02239999999999,53.85600000000001,var(--text-opacity));
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background: linear-gradient(180deg,#fff,#f9fafb);
+  border: 1px solid #c4cdd6;
+  box-shadow: 0 1px 0 0 rgb(25 30 35 / 5%);
+  height: 38px;
+  line-height: 36px;
+}
