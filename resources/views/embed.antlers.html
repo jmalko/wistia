@@ -77,30 +77,123 @@
 
         // show title
         {{ if show_title }}
-        document.getElementById('wistia_meta_title_{{ wistia_id }}').innerText = video._mediaData.name;
+            document.getElementById('wistia_meta_title_{{ wistia_id }}').innerText = video._mediaData.name;
         {{ /if }}
 
         // show duration
         {{ if show_duration }}
         document.getElementById('wistia_meta_duration_{{ wistia_id }}').innerText = 
-            Math.floor(video.duration() % 3600 / 60).toString() + "m";
+            Math.ceil(video.duration() % 3600 / 60).toString() + "m";
         {{ /if }}
 
-        // mark complete
-        {{ if track_completion }}
-        video.bind('secondchange', function(t) {
-            if (video.percentWatched() > 0.1) {
-                document.getElementById('wistia_meta_complete_{{ wistia_id }}').innerText = "Completed";
+        // parse complete and finish cookies
+        var cdata = [];
+        var fdata = [];
+        var cwatch = true;
+        var fwatch = true;
+
+        var cookieArr{{wistia_id}} = document.cookie.split(";");
+        var cA{{wistia_id}}ln = cookieArr{{wistia_id}}.length;
+
+        for(var i = 0; i < cA{{wistia_id}}ln; i++) {
+
+            var cookiePair = cookieArr{{wistia_id}}[i].split("=");
+
+            if('wistiaComplete' == cookiePair[0].trim()) {
+                var cdata = JSON.parse(atob(decodeURIComponent(cookiePair[1])));
+                var dl = cdata.length;
+                for(var i = 0; i < dl; i++) {
+                    if ('{{ wistia_id }}' == cdata[i]) {
+                        cwatch = false;
+                        var metaComplete = document.getElementById('wistia_meta_complete_{{ wistia_id }}');
+                        if (metaComplete) {
+                            metacomplete.innerText = "Completed";
+                        }
+                    }
+                }
             }
-        });
-        {{ /if }}
-        
+
+            /*
+
+            if('wistiaFinished' == cookiePair[0].trim()) {
+                var fdata = JSON.parse(atob(decodeURIComponent(cookiePair[1])));
+                var dl = fdata.length;
+                for(var i = 0; i < dl; i++) {
+                    if ('{{ wistia_id }}' == fdata[i]) {
+                        fwatch = false;
+                        var metaFinished = document.getElementById('wistia_meta_finished_{{ wistia_id }}')
+                        if (metaFinished) {
+                            metaFinished.innerText = "Finished";
+                        }
+                    }
+                }
+            }
+            */
+            
+        }
+
+        // mark complete
+
+        if (cwatch) {
+
+            console.log('watch for complete {{ wistia_id }}');
+
+            video.bind('secondchange', function(t) {
+
+                if (video.percentWatched() > 0.9) {
+
+                    {{ if track_completion }}
+
+                        document.getElementById('wistia_meta_complete_{{ wistia_id }}').innerText = "Completed";
+
+                    {{ /if }}
+
+                    var detailsComplete = document.getElementById('wistia_details_complete_{{ wistia_id }}');
+
+                    if (detailsComplete) {
+                        detailsComplete.innerText = "Completed";
+                        detailsComplete.classList.add('wistia_details_completed_mark');
+                    }
+                    
+                    cdata.push('{{ wistia_id }}');
+
+                    document.cookie = "wistiaComplete="+ btoa(JSON.stringify(cdata)) + "; path=/;max-age=" + 30*24*60*60;
+                    
+                    return video.unbind;
+                    
+                }
+            });
+        }
+
         // mark finished
-        {{ if track_finish }}
-        video.bind('end', function(t) {
-            document.getElementById('wistia_meta_finished_{{ wistia_id }}').innerText = "Finished";
-        });
-        {{ /if }}
+
+        if (fwatch) {
+
+            console.log('watch for finish {{ wistia_id }}');
+
+            video.bind('end', function(t) {
+
+                {{ if track_finish }}
+
+                    document.getElementById('wistia_meta_finished_{{ wistia_id }}').innerText = "Finished";
+
+                {{ /if }}
+
+                var detailsFinished = document.getElementById('wistia_details_finished_{{ wistia_id }}');
+
+                if (detailsFinished) {
+                    detailsFinished.innerText = "Finished";
+                    detailsFinished.classList.add('wistia_details_finished_mark');
+                }
+
+                fdata.push('{{ wistia_id }}');
+
+                document.cookie = "wistiaFinished="+ btoa(JSON.stringify(fdata)) + "; path=/;max-age=" + 30*24*60*60;
+
+                return video.unbind;
+
+            });
+        }
 
     }});
 

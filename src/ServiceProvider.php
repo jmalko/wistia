@@ -4,11 +4,18 @@ namespace Jmalko\Wistia;
 
 use Statamic\Providers\AddonServiceProvider;
 use Jmalko\Wistia\Fieldtypes\Wistia; 
+use Jmalko\Wistia\Modifiers\Details; 
 
 class ServiceProvider extends AddonServiceProvider
 {
+
+
     protected $fieldtypes = [
         Wistia::class,
+    ];
+
+    protected $modifiers = [
+        Details::class,
     ];
 
     protected $scripts = [
