@@ -4,10 +4,16 @@
 
     var xhttp_{{wistia_id}} = new XMLHttpRequest();
 
-    xhttp_{{wistia_id}}.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
+    function getDecimal(n) {
+        return (n - Math.floor(n));
+    }
+
+    xhttp_{{wistia_id}}.onreadystatechange = function() {   
+        if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(xhttp_{{wistia_id}}.responseText);
-                document.getElementById('wistia_details_duration_{{ wistia_id }}').innerText = "~" + Math.ceil(data.media.duration % 3600 / 60).toString() + "m";
+                var durationSeconds = (data.media.duration / 60);
+                var decimalSeconds = getDecimal(durationSeconds) * 60;
+                document.getElementById('wistia_details_duration_{{ wistia_id }}').innerText = durationSeconds.toFixed() + "." + Math.round(decimalSeconds) + " min";
             }
         };
 
