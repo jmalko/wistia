@@ -1,18 +1,1 @@
-<span class="wistia_details_duration" id="wistia_details_duration_{{ wistia_id }}"></span>
-
-<script>
-
-    var xhttp_{{wistia_id}} = new XMLHttpRequest();
-
-    xhttp_{{wistia_id}}.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var data = JSON.parse(xhttp_{{wistia_id}}.responseText);
-                document.getElementById('wistia_details_duration_{{ wistia_id }}').innerText = "~" + Math.ceil(data.media.duration % 3600 / 60).toString() + "m";
-            }
-        };
-
-    xhttp_{{wistia_id}}.open("GET", "https://fast.wistia.com/embed/medias/{{ wistia_id }}.json", true);
-
-    xhttp_{{wistia_id}}.send();
-
-</script>
+<span class="wistia_details_duration">{{ duration }}</span>

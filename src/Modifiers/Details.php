@@ -21,7 +21,11 @@ class Details extends Modifier
         foreach($params as $p) {
             switch ($p) {
             case 'duration':
-                return view('wistia::details.duration', compact(['wistia_id']));
+                return array_key_exists('duration', $value->getData()['data']) ? $value->getData()['data']['duration'] : 0;
+            case 'duration_formatted':
+                $duration = array_key_exists('duration', $value->getData()['data']) ? $value->getData()['data']['duration'] : '';
+                $duration = $duration ? gmdate('H:i:s', $duration) : '';
+                return view('wistia::details.duration', compact(['duration']));
             case 'complete':
                 return view('wistia::details.completion', compact(['wistia_id']));
             case 'finished':
