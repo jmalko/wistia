@@ -20,6 +20,17 @@ class Details extends Modifier
 
         foreach($params as $p) {
             switch ($p) {
+            case 'thumbnail':
+                if (array_key_exists('assets', $value->getData()['data'])) {
+                    $assets = $value->getData()['data']['assets'];
+                    foreach ($assets as $asset) {
+                        if ($asset['type'] == 'still_image') {
+                            ray($asset['url']);
+                            return $asset['url'];
+                        }
+                    }
+                }
+                return;
             case 'duration':
                 return array_key_exists('duration', $value->getData()['data']) ? $value->getData()['data']['duration'] : 0;
             case 'duration_formatted':
