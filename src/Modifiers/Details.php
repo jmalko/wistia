@@ -25,7 +25,6 @@ class Details extends Modifier
                     $assets = $value->getData()['data']['assets'];
                     foreach ($assets as $asset) {
                         if ($asset['type'] == 'still_image') {
-                            ray($asset['url']);
                             return $asset['url'];
                         }
                     }
