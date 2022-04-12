@@ -1,4 +1,4 @@
-<span class="wistia_details_complete" id="wistia_details_complete_{{ wistia_id }}"></span>
+<span class="wistia_details_complete wistia_details_complete_{{ wistia_id }}"></span>
 <script>
     var cookieArrDetail{{wistia_id}} = document.cookie.split(";");
     var cAD{{wistia_id}}ln = cookieArrDetail{{wistia_id}}.length;
@@ -6,12 +6,11 @@
         var cookiePairDC{{wistia_id}} = cookieArrDetail{{wistia_id}}[i].split("=");
         if('wistiaComplete' == cookiePairDC{{wistia_id}}[0].trim()) {
             var data = JSON.parse(atob(decodeURIComponent(cookiePairDC{{wistia_id}}[1])));
-            var dl = data.length;
-            for(var i = 0; i < dl; i++) {
-                if ('{{ wistia_id }}' == data[i]) {
-                    document.getElementById('wistia_details_complete_{{ wistia_id }}').parentNode.classList.add('active');
-                }
-            }
+            data.forEach(function(item) {
+                document.querySelectorAll('.wistia_details_complete_' + item).forEach(function(el) {
+                        el.parentNode.classList.add('active', 'complete');
+                });
+            });
         }
     }
 </script>

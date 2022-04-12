@@ -20,7 +20,7 @@
             <div class="wistia_popup_duration" id="wistia_meta_duration_{{ wistia_id }}"></div>
             {{ /if }}
             {{ if track_completion }}
-            <div class="wistia_popup_completion" id="wistia_meta_complete_{{ wistia_id }}"></div>
+            <div class="wistia_popup_completion wistia_meta_complete_{{ wistia_id }}"></div>
             {{ /if }}
             {{ if track_finish }}
             <div class="wistia_popup_finished" id="wistia_meta_finished_{{ wistia_id }}"></div>
@@ -53,7 +53,7 @@
             <div class="wistia_inline_duration" id="wistia_meta_duration_{{ wistia_id }}"></div>
             {{ /if }}
             {{ if track_completion }}
-            <div class="wistia_inline_completion" id="wistia_meta_complete_{{ wistia_id }}"></div>
+            <div class="wistia_inline_completion wistia_meta_complete_{{ wistia_id }}"></div>
             {{ /if }}
             {{ if track_finish }}
             <div class="wistia_inline_finished" id="wistia_meta_finished_{{ wistia_id }}"></div>
@@ -82,7 +82,7 @@
 
         // show duration
         {{ if show_duration }}
-        document.getElementById('wistia_meta_duration_{{ wistia_id }}').innerText = 
+            document.getElementById('wistia_meta_duration_{{ wistia_id }}').innerText = 
             Math.ceil(video.duration() % 3600 / 60).toString() + "m";
         {{ /if }}
 
@@ -91,7 +91,7 @@
         var fdata = [];
         var cwatch = true;
         var fwatch = true;
-
+        
         var cookieArr{{wistia_id}} = document.cookie.split(";");
         var cA{{wistia_id}}ln = cookieArr{{wistia_id}}.length;
 
@@ -101,36 +101,17 @@
 
             if('wistiaComplete' == cookiePair[0].trim()) {
                 var cdata = JSON.parse(atob(decodeURIComponent(cookiePair[1])));
-                var dl = cdata.length;
-                for(var i = 0; i < dl; i++) {
-                    if ('{{ wistia_id }}' == cdata[i]) {
-                        cwatch = false;
-                        var metaComplete = document.getElementById('wistia_meta_complete_{{ wistia_id }}');
-                        if (metaComplete) {
-                            metacomplete.innerText = "Completed";
-                        }
+                cdata.forEach(function(item) {
+                    cwatch = false;
+                    var metaCompletes = document.querySelectorAll('.wistia_meta_complete_' + item);
+                    for(var i = 0; i < metaCompletes.length; i++) {
+                       metaCompletes[i].innerText = 'Completed';
                     }
-                }
+                });
             }
-
-            /*
-
-            if('wistiaFinished' == cookiePair[0].trim()) {
-                var fdata = JSON.parse(atob(decodeURIComponent(cookiePair[1])));
-                var dl = fdata.length;
-                for(var i = 0; i < dl; i++) {
-                    if ('{{ wistia_id }}' == fdata[i]) {
-                        fwatch = false;
-                        var metaFinished = document.getElementById('wistia_meta_finished_{{ wistia_id }}')
-                        if (metaFinished) {
-                            metaFinished.innerText = "Finished";
-                        }
-                    }
-                }
-            }
-            */
-            
         }
+
+
 
         // mark complete
 
@@ -142,19 +123,10 @@
 
                 if (video.percentWatched() > 0.9) {
 
-                    {{ if track_completion }}
+                    document.querySelectorAll('.wistia_details_complete_' + item).forEach(function(el) {
+                            el.parentNode.classList.add('active', 'complete');
+                    });
 
-                        document.getElementById('wistia_meta_complete_{{ wistia_id }}').innerText = "Completed";
-
-                    {{ /if }}
-
-                    var detailsComplete = document.getElementById('wistia_details_complete_{{ wistia_id }}');
-
-                    if (detailsComplete) {
-                        detailsComplete.innerText = "Completed";
-                        detailsComplete.classList.add('wistia_details_completed_mark');
-                    }
-                    
                     cdata.push('{{ wistia_id }}');
 
                     document.cookie = "wistiaComplete="+ btoa(JSON.stringify(cdata)) + "; path=/;max-age=" + 30*24*60*60;
@@ -196,5 +168,6 @@
         }
 
     }});
+
 
 </script>
