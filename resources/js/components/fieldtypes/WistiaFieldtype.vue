@@ -75,8 +75,6 @@ export default {
 
         window._wapiq = window._wapiq || [];
 
-        console.log(this.data);
-
         _wapiq.push((W) => {
             window.wistiaUploader = new W.Uploader({
                 accessToken: this.meta.wistiaApi,
