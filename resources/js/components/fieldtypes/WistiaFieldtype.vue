@@ -85,6 +85,8 @@ export default {
             wistiaUploader.bind("uploadembeddable", (file, media, embedCode, oembedResponse) => {
                 this.data.url = media.url;
                 this.updateDebounced(this.data);
+               // fetch wistia information 
+                this.fetchMedia();
             });
 
         });
