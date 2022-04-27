@@ -49,15 +49,13 @@ export default {
     },
 
     mounted() {
-        
-        // account for < 1.2.1 values
 
-        if ( this.data && typeof this.data === 'string') {
+        if ( this.data.url == undefined ) {
             this.data = {
-                url: this.data,
+                url: ( typeof this.data === 'string' ) ? this.data : '',
                 wistia: {}
             }
-        }
+        } 
         
         const plugin = document.createElement("script");
         plugin.setAttribute(
@@ -77,8 +75,9 @@ export default {
 
         window._wapiq = window._wapiq || [];
 
-        _wapiq.push((W) => {
+        console.log(this.data);
 
+        _wapiq.push((W) => {
             window.wistiaUploader = new W.Uploader({
                 accessToken: this.meta.wistiaApi,
                 dropIn: "wistia_uploader",
