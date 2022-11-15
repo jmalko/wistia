@@ -65,12 +65,18 @@ class Wistia extends \Statamic\Fields\Fieldtype
         $track_completion = $this->config('track_completion');
         $track_finish = $this->config('track_finish');
 
+        if ( ! in_array('wistia', $value) ) {
+            return;
+        }
+
         $wistia_id = is_array($value) ? basename($value['url']) : basename($value);
-        $data = is_array($value) ? $value['wistia']['media'] : [] ;
 
         if (!$wistia_id) {
             return;
         }
+
+        $data = is_array($value) ? $value['wistia']['media'] : [] ;
+
 
         return view('wistia::embed', compact([
             'embed_mode',
