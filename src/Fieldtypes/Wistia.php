@@ -65,7 +65,7 @@ class Wistia extends \Statamic\Fields\Fieldtype
         $track_completion = $this->config('track_completion');
         $track_finish = $this->config('track_finish');
 
-        if ( ! in_array('wistia', $value) ) {
+        if ( ! array_key_exists('wistia', $value) ) {
             return;
         }
 
