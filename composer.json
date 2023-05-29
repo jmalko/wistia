@@ -4,9 +4,9 @@
     "type": "statamic-addon",
     "description": "Upload and embed Wistia videos straight from an entry field in Statamic v3+.  Either drag and drop to upload a new video, or copy-paste the url to the video you wish to embed.",
     "require": {
-        "php": "^7.4 || ^8.0",
-        "laravel/framework": "^7.30.3 || ^8.40 || ^9.0",
-        "statamic/cms": "^3.0"
+        "php": "^7.4 || ^8.0 || ^8.1",
+        "laravel/framework": "^7.30.3 || ^8.40 || ^9.0 || ^10.0",
+        "statamic/cms": "^3.0 || ^4.0"
     },
     "autoload": {
         "psr-4": {
